@@ -95,4 +95,57 @@ class API < Sinatra::Base
     {:message => "OK"}.to_json
   end
   
+  get '/API/comments' do
+    
+    comments = Comment.select([:id, :author, :body, :post_id])
+    content_type :json
+    comments.to_json
+    
+  end
+  
+  get '/API/posts/:post_id/comments.json' do
+    
+    comments = Comment.select([:id, :author, :body, :post_id])
+    
+    content_type :json
+    comments.to_json
+    
+  end
+  
+  post '/API/posts/:post_id/comments.json' do
+    
+    request.body.rewind
+    json = JSON.parse(request.body.read)
+    
+    post_id = json["post_id"].to_i
+    comment = json["comment"]
+    
+    status_code = 404
+    returnJSON = {
+      :message => "Post not found."
+    }
+    
+    post = Post.select([:id]).find(post_id)
+    
+    if post.present?
+      status_code = 422
+      returnJSON = {
+        :message => "Unprocessing entity."
+      }
+      
+      comment = post.comments.new(comment)
+      if comment.save
+        status_code = 201
+        returnJSON = comment
+      end
+      
+    end
+    
+    
+    content_type :json
+    status status_code
+    returnJSON.to_json
+    
+  end
+  
 end

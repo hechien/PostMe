@@ -63,7 +63,7 @@ PostMe::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
   
   # APIs
-  ["posts.json", "posts/:id.json"].each do |request|
+  ["posts.json", "posts/:id.json", "comments.json", "posts/:post_id/comments.json"].each do |request|
     match "/API/#{request}", :to => API
   end
 end
