@@ -40,3 +40,5 @@ module PostMe
     config.filter_parameters += [:password]
   end
 end
+
+require "#{Rails.root}/lib/API"
