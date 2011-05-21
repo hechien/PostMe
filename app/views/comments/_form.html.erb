@@ -12,8 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :post %><br />
-    <%= f.text_field :post %>
+    <%= f.hidden_field :post_id, {:value => params[:post_id].to_i} %>
   </div>
   <div class="field">
     <%= f.label :author %><br />

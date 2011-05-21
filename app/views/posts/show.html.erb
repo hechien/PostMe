@@ -10,6 +10,16 @@
   <%= @post.body %>
 </p>
 
+<div id="comments">
+  <ul>
+    <% @comments.each{|comment| %>
+      <li>
+        <%= comment[:body] %><br />By:&nbsp;<%= comment[:author] %>
+      </li>
+    <% } %>
+  </ul>
+</div>
+
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>

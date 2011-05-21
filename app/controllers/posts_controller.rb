@@ -13,7 +13,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.xml
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:id], :include => [:comments])
+    @comments = @post.comments
 
     respond_to do |format|
       format.html # show.html.erb
