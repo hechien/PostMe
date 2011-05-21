@@ -10,7 +10,8 @@ class API < Sinatra::Base
   end
   
   get '/API/posts/:id.json' do
-    post = Post.select([:id, :title, :body]).find(params[:id])
+    post = Post.select([:id, :title, :body]).find(params[:id], :include => [:comments])
+    comments = post.comments
     
     status_code = 404
     returnJSON  = {
@@ -19,7 +20,10 @@ class API < Sinatra::Base
     
     if post.present?
       status_code = 200
-      returnJSON = post
+      returnJSON = {
+        :post => post,
+        :comments => comments
+      }
     end
     
     content_type :json
